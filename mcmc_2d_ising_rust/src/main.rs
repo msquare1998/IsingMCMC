@@ -11,11 +11,11 @@ fn get_system_time_as_seed() -> u64 {
 }
 
 fn process_data(data: &[f64]) -> (f64, f64) {
-    let mean = data.iter().sum::<f64>() / data.len() as f64;
-    let error = data.iter().map(
-        |x| (x - mean).powi(2)
-    ).sum::<f64>() / (data.len() * (data.len() - 1)) as f64;
-    (mean, error)
+    let n = data.len();
+    let mean = data.iter().sum::<f64>() / n as f64;
+    let variance = data.iter().map(|x| (x - mean).powi(2)).sum::<f64>() / (n - 1) as f64;
+    let standard_error = (variance / n as f64).sqrt();
+    (mean, standard_error)
 }
 
 fn main() {
