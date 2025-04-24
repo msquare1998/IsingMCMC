@@ -12,10 +12,11 @@ def get_system_time_as_seed():
     return int(time.time())
 
 def process_data(data):
-    data = np.array(data)
-    mean = np.mean(data)
-    error = np.sum((data - mean) ** 2) / (len(data) * (len(data) - 1))
-    return mean, error
+    n = len(data)
+    mean = sum(data) / n
+    variance = sum((x - mean) ** 2 for x in data) / (n - 1)
+    standard_error = math.sqrt(variance / n)
+    return mean, standard_error
 
 def main():
     # ========================================================
